@@ -1,4 +1,5 @@
-#He wants me to make an adventure-style game: let's call it "Boring Game"
+#This is an adventure-style game: let's call it "Boring Game."
+
 from sys import exit
 #from random import randint
 global prompt
