@@ -1,6 +1,12 @@
 # Samples
 Little programs that do little things.
 
+######
+
+craft pattern generators use the zellegraphics library to create 2-color patterns with random elements. The original patterns are 10x10 and hard-coded.
+
+######
+
 boring.py is a little adventure game that really doesn't do anything at all. You can 
       'north' : ['go north','head north','north'],
 			'south' : ['go south','head south','south'],
