@@ -1,5 +1,5 @@
 # Samples
-Little programs that do little things.
+Little programs that do little things. Also testing out git concepts.
 
 ######
 
