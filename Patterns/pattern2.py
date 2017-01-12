@@ -1,43 +1,22 @@
 import random
+from randpixel import randpixel
 from zellegraphics import *
 
-def randpixel(color1, color2):
-    if random.randint(0,1) == 1:
-        color = color1
-    else:
-        color = color2
-    return color
+def cross_overlay(win,cross_color,ps):
+    boxarray_tl = [(0,0),(4,0),(8,0),(3,3),(6,3),(0,4),(7,4),(4,6),(0,8),(8,8)]
+    boxarray_br = [(2,2),(6,4),(10,2),(4,7),(7,7),(3,6),(10,6),(6,10),(2,10),(10,10)]
+    for q in range(len(boxarray_tl)):
+        tl_x = boxarray_tl[q][0]*ps
+        tl_y = boxarray_tl[q][1]*ps
+        tl = Point(tl_x,tl_y)
+        br_x = boxarray_br[q][0]*ps
+        br_y = boxarray_br[q][1]*ps
+        br = Point(br_x,br_y)
+        p = Rectangle(tl,br)
+        p.setFill(cross_color)
+        p.draw(win)
 
-def pattern2(cross_color, bg_color, goal_color):
-    ps = 20
-    win = GraphWin("box", 10*ps, 10*ps)
-
-    for x in range(10):
-        for y in range(10):
-            color = randpixel(cross_color,bg_color)
-            tl = Point(x*ps,y*ps)
-            br = Point((x+1)*ps,(y+1)*ps)
-            p = Rectangle(tl,br)
-            p.setFill(color)
-            p.draw(win)
-
-#let's draw the cross_color boxes on top
-    if cross_color == goal_color:
-        boxarray_tl = [(0,0),(4,0),(8,0),(3,3),(6,3),(0,4),(7,4),(4,6),(0,8),(8,8)]
-        boxarray_br = [(2,2),(6,4),(10,2),(4,7),(7,7),(3,6),(10,6),(6,10),(2,10),(10,10)]
-        for q in range(len(boxarray_tl)):
-            tl_x = boxarray_tl[q][0]*ps
-            tl_y = boxarray_tl[q][1]*ps
-            tl = Point(tl_x,tl_y)
-            br_x = boxarray_br[q][0]*ps
-            br_y = boxarray_br[q][1]*ps
-            br = Point(br_x,br_y)
-            p = Rectangle(tl,br)
-            p.setFill(cross_color)
-            p.draw(win)
-        
-#Now the bg_color boxes (which are harder)
-    else:
+def bg_overlay(win,bg_color,ps):
         vertarray = [(2,0),(4,0),(4,3),(3,3),(3,4),(0,4),(0,2),(2,2)]
         vertarray1 = []
         vertarray2 = []
@@ -74,7 +53,17 @@ def pattern2(cross_color, bg_color, goal_color):
         p4.draw(win)
         p4.move(6*ps,6*ps)
 
-#Lets put some grid lines in
+def random_init(win,color1,color2,ps):
+        for x in range(10):
+            for y in range(10):
+                color = randpixel(color1,color2)
+                tl = Point(x*ps,y*ps)
+                br = Point((x+1)*ps,(y+1)*ps)
+                p = Rectangle(tl,br)
+                p.setFill(color)
+                p.draw(win)
+
+def gridlines(win,ps):
     for x in range(11):
         point1 = Point(x*ps,0)
         point2 = Point(x*ps,10*ps)
@@ -84,6 +73,34 @@ def pattern2(cross_color, bg_color, goal_color):
         point4 = Point(10*ps,x*ps)
         x_line = Line(point3,point4)
         x_line.draw(win)
+
+def pattern2(cross_color, bg_color, goal_color):
+    """draws a box of a certain pattern. This is a transitional
+    pattern toward a solid color (either the cross or the background color).
+    cross_color is the top cross color. bg_color is the background color.
+    goal_color is the goal color. example: pattern2('blue','yellow','blue')"""
     
+    ps = 20
+
+    try:
+    #let's draw the cross_color boxes on top
+        if cross_color == goal_color:
+            win = GraphWin("box", 10*ps, 10*ps)
+            random_init(win,cross_color,bg_color,ps)
+            cross_overlay(win,cross_color,ps)
+            gridlines(win,ps)
+    
+    #Now the bg_color boxes (which are harder)
+        elif bg_color == goal_color:
+            win = GraphWin("box", 10*ps, 10*ps)
+            random_init(win,cross_color,bg_color,ps)
+            bg_overlay(win,bg_color,ps)
+            gridlines(win,ps)
+
+        else:
+            raise ValueError
+    except ValueError:
+        print "goal_color must be derived from other two colors"
+
 
 

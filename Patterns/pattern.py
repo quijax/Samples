@@ -1,13 +1,6 @@
 import random
-from randpixel.py import randpixel
+from randpixel import randpixel
 from zellegraphics import *
-
-# def randpixel(color1,color2):
-#     if random.randint(0,1) == 1:
-#         color = color1
-#     else:
-#         color = color2
-#     return color
 
 def pattern(color1,color2):
 	"""draws a box of a certain pattern. 
