@@ -1,14 +1,6 @@
 import random
 from zellegraphics import *
-
-def randpixel(goal_color,color2,percent):
-    #percent is how much the algorithm favors the goal_color, it is an int from 0 to 100
-    random.seed()
-    if random.randint(0,100) >= percent:
-		color = color2
-    else:
-		color = goal_color
-    return color
+from randpixel import randpixel
 
 def drawpixel(win, color, ps, x, y):
         tl = Point(x*ps,y*ps)
@@ -18,6 +10,12 @@ def drawpixel(win, color, ps, x, y):
         p.draw(win)
 
 def pattern3(cross_color,goal_color,other_color):
+    """draws a box of a certain pattern. This is a transitional
+    pattern between a pattern and a goal color. 
+    cross_color is the top cross color. It must be either goal_color or other_color.
+    goal_color is the goal color. other_color is needed in case cross_color and goal_color are the same.
+    example: pattern3('blue','yellow','blue')"""
+  
     #other_color is the non-goal color
     ps = 20
     win = GraphWin("box", 10*ps, 10*ps)

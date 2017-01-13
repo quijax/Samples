@@ -101,6 +101,3 @@ def pattern2(cross_color, bg_color, goal_color):
             raise ValueError
     except ValueError:
         print "goal_color must be derived from other two colors"
-
-
-
